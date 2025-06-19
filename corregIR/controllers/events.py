@@ -42,13 +42,13 @@ def save_file(df):
         print("Archivo cancelado")
 
 
-def graph_IR(df):
+def graph_IR(df, y_label):
     fig, ax = plt.subplots(figsize=(10, 4))
-    lineplot = sns.lineplot(df, x = "Wavenumeber_cm-1", y="%T", ax=ax, color="red")
+    lineplot = sns.lineplot(df, x = "Wavenumeber_cm-1", y=y_label, ax=ax, color="red")
 
-    plt.plot(df["Wavenumeber_cm-1"], df["%T"], color="red",  label="Línea ajustada")
+    plt.plot(df["Wavenumeber_cm-1"], df[y_label], color="red",  label="Línea ajustada")
     
-    (lineplot,) = ax.plot(df["Wavenumeber_cm-1"], df["%T"], color="red", label="Línea ajustada")
+    (lineplot,) = ax.plot(df["Wavenumeber_cm-1"], df[y_label], color="red", label="Línea ajustada")
     
     ax.set_xlabel('Wavenumber ($cm^{-1}$)')  
     ax.set_ylabel('%T') 
@@ -81,7 +81,7 @@ def correct_signal(df, lam, p):
     y_min = df["%T_baseline"].min()
     y_max = df["%T_baseline"].max()
 
-    df["%T"] = (df["%T_baseline"] - y_min) / (y_max - y_min) * (nuevo_max - nuevo_min) + nuevo_min
+    df["%T_corrected"] = (df["%T_baseline"] - y_min) / (y_max - y_min) * (nuevo_max - nuevo_min) + nuevo_min
     
     del df["%T_baseline"]
       

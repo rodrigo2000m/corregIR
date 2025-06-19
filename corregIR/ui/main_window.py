@@ -5,6 +5,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from corregIR.controllers.events import open_file, graph_IR, correct_signal, save_file
 from corregIR.utils.files import  save_IR_adjusted
+from corregIR.utils.helpers import contact
 import mplcursors
 
 class main_window(tk.Tk):
@@ -23,7 +24,10 @@ class main_window(tk.Tk):
 
         self.botton_manipulation = ttk.Button(self.frame_menu, text="Manipulación", command=self.show_manipulation_options)
         self.botton_manipulation.grid(row=0, column=1)
-   
+  
+        self.botton_support = ttk.Button(self.frame_menu, text="Soporte", command=self.support_label)
+        self.botton_support.grid(row=0, column=2)
+
         # Click "Archivos"
         self.show_menu = tk.Menu(self, tearoff=0)
         self.show_menu.add_command(label="Abrir", command=self.accion_abrir)
@@ -37,7 +41,8 @@ class main_window(tk.Tk):
         #self.show_manipulation_options.add_command(label="Suavizado", command=self.smooth)
 
 
-        # Click baseline
+        # Click soporte
+
         
    
     def show_menu(self):
@@ -74,16 +79,18 @@ class main_window(tk.Tk):
 
     def smooth(self):
         print("smooth")
-
-
+    
+    def support_label(self):
+        contact(self)
     def accion_abrir(self):
         contenido = open_file()
         if contenido is not None:
             # Mostrar el contenido en un widget, o lo que quieras hacer con él
             print("Contenido del archivo:\n", contenido)
-            graph_IR(contenido)
+            graph_IR(contenido, "%T")
             plt.tight_layout()
             plt.show(block=False)    
+
     def abrir_ventana_valores(self):
         contenido = open_file()
         ventana = tk.Toplevel(self)
@@ -104,7 +111,7 @@ class main_window(tk.Tk):
             p = float(entry_b.get())
             if contenido is not None:
                 df = correct_signal(contenido, lam, p)
-                lineplot = graph_IR(contenido)  
+                lineplot = graph_IR(contenido, "%T_corrected")  
                 cursor = mplcursors.cursor(lineplot, multiple=True)
                 @cursor.connect("add")
                 def on_add(sel):
