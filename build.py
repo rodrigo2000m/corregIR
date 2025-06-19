@@ -9,6 +9,7 @@ def build():
         command = [
             "pyinstaller",
             "--onefile",
+            "--windowed",
             "--name", "corregIR_win",
             "--distpath", "dist_windows",
             "--workpath", "build_windows",
@@ -19,6 +20,7 @@ def build():
         command = [         
             "pyinstaller",
             "--onefile",
+            "--windowed",
             "--name", "corregIR_linux",
             "--distpath", "dist_linux",
             "--workpath", "build_linux",
