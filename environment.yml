@@ -1,0 +1,15 @@
+name: corregIR
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - tk
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - mplcursors
+  - scipy
+  - pybaselines
+  - pyinstaller
+  - Pillow
