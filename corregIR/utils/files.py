@@ -1,8 +1,5 @@
 import pandas as pd
-
-#def leer_archivo(ruta):
-  #  with open(ruta, 'r', encoding='utf-8') as f:
-   #     return f.read()
+from io import StringIO
 
 def read_file(file_path):
     with open(file_path, 'r') as f:
@@ -11,12 +8,22 @@ def read_file(file_path):
                 first_line = line_no + 1
             else:
                 pass
+    
 
-    df = pd.read_csv(file_path,
-                     sep = "\s+",
-                     skiprows = first_line,
-                     names=["Wavenumeber_cm-1", "%T"]
-                     )
+    if first_line == 5:
+        df = pd.read_csv(file_path,
+            sep="\t",
+            decimal=",",
+            skiprows = first_line,
+            names=["Wavenumeber_cm-1", "%T"]
+            )
+    else:
+        df = pd.read_csv(file_path,
+            sep="\s+",
+            skiprows = first_line,
+            names=["Wavenumeber_cm-1", "%T"]
+            )
+
     return df
 
 
